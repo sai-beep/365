@@ -1,0 +1,89 @@
+1. 
+hacking an android app for fun:: leads leakind AWS keys and more the attacker configated aws cli and tested the crid's working .. report
+  pour tooling mobsf tool just run the app:
+
+ref: https://blog.securitybreached.org/2024/06/28/finding-hidden-threats-how-i-found-leaked-aws-credentials-in-an-android-app-api-using-dast/
+test on ola target.. 
+  shaadi on sunday.
+read this blogs on android testing..
+
+https://emptynebuli.github.io/tooling/2024/04/22/blackberryMDM.html
+https://emptynebuli.github.io/tooling/2021/03/22/rustyiron.html
+
+
+  ------------------------------------------------------------------------------------------------------------------------
+
+  2. this blog given me a good report writeing a nice explaination will give u more money so unstand the application 
+  https://www.imperva.com/blog/navigating-the-sea-exploiting-digitalocean-apis/
+
+Note: the attacker added in to the team by admin intieved link. and removed then the attacker some how with support.target.com login with oauth and gone old tema members informaiton and even edit option..
+worth reading at again.
+  
+ ------------------------------------------------------------------------------------------------------------------------ 
+  3.  this blog post given the idea off testing only vuln parameters like lang=fr;id;  BOOM
+  the parameter is directing passing into db without any valedation.. LEADS TO RCE.
+
+  https://chocapikk.com/posts/2024/svgtranslate/
+
+   ------------------------------------------------------------------------------------------------------------------------ 
+
+  4. https://medium.com/@LogicalHunter/trpc-security-research-hunting-for-vulnerabilities-in-modern-apis-b0d38e06fa71 
+
+  NOTES:
+1. The most critical question we need to address in API testing is: What style is used? Each API has a distinct style. By understanding the style, we can more easily perform reconnaissance and discover vulnerabilities. How can we determine that the target’s API style 
+ 
+GET  /ProcedureName
+POST /ProcedureName
+
+GET  /getUsers
+POST /addUser
+2. Recon : api doc's which includs 
+  > api fuzzing 
+  > google dorking 
+  > waymore machine
+  > .js file or .json for paths 
+
+  3. afther the walkthorgth the applicatin
+  4. fuzzing for hidden api /paths || paramter is IMP for idor , mass-aggment, injection
+unstand the process or system which enpint need token and which not
+ fuzz every thing 
+
+  5.  Notes: a must try bug on bentley for ATO..
+take help form chatgpt..
+  open window
+→ wait for login
+→ about:blank
+→ read navigation.entries()
+→ steal token
+→ restore history
+  https://joaxcar.com/blog/2023/10/06/cve-2022-4908-sop-bypass-in-chrome-using-navigation-api/  
+
+  6. 
+  https://padsalatushal.medium.com/from-disclosure-to-high-severity-leveraging-dyte-api-key-for-maximum-impact-468c444963c6
+
+  Note:
+As a bug bounty hunter engaged in a VDP program, I recently uncovered a JavaScript file that unveiled a trove of sensitive API keys and tokens. Among them was the Dyte API key, an unfamiliar entity in my exploration. This discovery revealed a mix of widely recognized keys like Google Developer, Stripe API, and Firebase credentials — each holding significant sensitivity. Curiously, while scouring through resources like the Keyhacks GitHub repo, I found no information on exploiting the Dyte API key, particularly the DYTE_ORG_ID and DYTE_KEY.
+
+7.  https://danaepp.com/that-time-i-broke-into-an-api-and-became-a-billionaire
+
+the attacker converted Content-type: to application/xml form /json and injected xml payloads out-of-band / blind or data extarcting..
+
+  8. https://eaton-works.com/2023/12/18/aditaas-cve-2023-6483/
+
+  the attacker just sometimes changed the id form 89898 to 1 `superadmin` and false to true at login process ..
+
+  key tech:
+1. identify how the session is made like..
+  before login & after login at network tag..
+  check on jscode for vericable informatino leak at js code.
+
+  9. https://medium.com/@mohammed0x04/how-i-found-two-api-vulnerabilities-using-website-source-code-6c4b0dc54d6f 
+this method: given me a approch for finding a bugs in source code like 
+  the attacker.. 
+  -walk thoughout the application 
+  - if the application had a spcifiy fodler for js code; the attacker downlaoded it via `https://chrome.google.com/webstore/detail/save-all-resources/abpdnfjocnmdomablahdcfnoggeeiedb` extension
+  -js file for api endpoints
+  -pasted in google sheeat and look one by one carefully for finding bugs..
+  -how the application is working the system for api's
+
+  
