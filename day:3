@@ -1,0 +1,16 @@
+tip:
+intital Recon:
+> when doing port scan it is a good approch for scaning only know port first like 22 to so on only know port.
+
+js -recon:
+search in .js or .json file for Authorization: Basic '
+Source: https://crypt0g30rgy.github.io/post/AuthBypass
+
+2. some time low priviage-ed token may leads too high risk.. 
+  calling internal endpoints with normal user's token's
+source: https://shahjerry33.medium.com/api-misconfiguration-no-swag-of-swaggerui-9b43135346be
+
+3.  fuzzing uuid with romdon uuid if 404 applicable migth give differnet objectives and differents leadings..
+  task: how to find romdom fuzzing uuid lists in internet...?
+  https://danaepp.com/hacking-a-net-api-in-the-real-world
+
