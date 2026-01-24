@@ -18,3 +18,26 @@ name=Sam
 org=ExCo
 
 
+Method: 1
+cat gau.txt | grep "\.js" | ~/go/bin/httpx -ct | grep "application/javascript" | awk '{print $1}' > gaujs.txt
+
+|| more .js paths form gaujs.txt 
+
+cat /mnt/c/Users/satha/OneDrive/Desktop/targets/zero/gaujs.txt | xargs -I@ -P10 bash -c 'python linkfinder.py -i @ -o cli 2>/dev/null' | ~/go/bin/anew /m
+nt/c/Users/satha/OneDrive/Desktop/targets/zero/jsart.txt
+
+cat jsart.txt | grep "\.js"  > jspaths.txt  {fuzzing on all dirtorery for application/javascript}
+
+Method:::::
+
+httpx?? flags: -l -path -ct ??
+
+grep -oP '^https?://[^/]+(?:/[^/]+){0,4}/?' gau.txt | sort -u > raw_paths.txt
+
+sed -E 's#([^/?]+)(\?.*)?$#\1/\2#' raw_paths.txt | grep -v "?" > fuzzingjspaths.txt
+
+clean up jsart.txt only for js enpoints.. 
+
+sed -E 's#^(\/\/|\.\/|/)##' jsart.txt | grep ".js" | grep -v "http://\|https://" > moneyjs.txt && rm jsart.txt && mv moneyjs.txt jsart.txt
+
+~/go/bin/httpx -l fuzzingjspaths.txt -path jsart.txt -ct | grep "application/javascript" | awk '{print $1}' >> gaujs.txt && cat gaujs.txt | sort -u > fuckjs.txt && rm gaujs.txt  && mv fuckjs.txt gaujs.txt 
