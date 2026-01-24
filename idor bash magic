@@ -1,0 +1,20 @@
+idor bash magic's
+
+copy all urls form cadio or burp suite:
+
+1. cut -d'?' -f1 | sort -u | urls.txt
+## this remove's the ?,& parameters form the urls..
+
+2. sed 's|https\?://[^/]*/||; s/?..*$//' urls.txt
+
+api/v1/archive
+api/v1/check-email
+api/v1/post/search
+
+3. cat urls.txt | ~/go/bin/unfurl keypairs | sort -u 
+
+id=123
+name=Sam
+org=ExCo
+
+
